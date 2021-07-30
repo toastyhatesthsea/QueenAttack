@@ -14,10 +14,16 @@ public class QueenAttackCalculator
 {
 
     private Board theBoard;
+    private Queen firstQueen, secondQueen;
 
-    public QueenAttackCalculator(Queen firstQueen, Queen secondQueen)
+    public QueenAttackCalculator(Queen aFirstQueen, Queen aSecondQueen)
     {
         theBoard = new Board(8, 8);
+        this.firstQueen = aFirstQueen;
+        this.secondQueen = aSecondQueen;
+
+        theBoard.getBoard()[firstQueen.getRow()][firstQueen.getColumn()] = firstQueen;
+        theBoard.getBoard()[secondQueen.getRow()][secondQueen.getColumn()] = secondQueen;
     }
 
     public boolean canQueensAttackOneAnother()
@@ -27,6 +33,19 @@ public class QueenAttackCalculator
         return answer;
     }
 
+    private void assignRowAttack()
+    {
+        for (int i = 0; i < theBoard.getRows(); i++)
+        {
+            if (theBoard.getBoard()[firstQueen.getRow()][i] == null || i != column)
+            {
+                theBoard.getBoard()[row][i] = new Covered();
+            }
+        }
+
+        //TODO Assign columns for attack and test row and columns for attacks
+    }
+
 
 }
 
@@ -34,18 +53,33 @@ public class QueenAttackCalculator
 class Queen extends Piece
 {
 
-    private Board aBoard;
     private int row, column;
 
+    public int getRow()
+    {
+        return row;
+    }
+
+    public void setRow(int row)
+    {
+        this.row = row;
+    }
+
+    public int getColumn()
+    {
+        return column;
+    }
+
+    public void setColumn(int column)
+    {
+        this.column = column;
+    }
 
     public Queen(int aRow, int aColumn)
     {
 
-        aBoard = new Board(8, 8);
         this.row = aRow;
         this.column = aColumn;
-
-        aBoard.getBoard()[aRow][aColumn] = new Queen()
 
     }
 
@@ -53,21 +87,9 @@ class Queen extends Piece
     public void assignAttack()
     {
         super.assignAttack();
-        this.assignRowAttack();
     }
 
-    private void assignRowAttack()
-    {
-        for(int i=0; i<aBoard.getRows(); i++)
-        {
-            if (aBoard.getBoard()[row][i] == null || i != column)
-            {
-                aBoard.getBoard()[row][i] = new Covered();
-            }
-        }
 
-        //TODO Assign columns for attack and test row and columns for attacks
-    }
 }
 
 class Board
@@ -84,6 +106,17 @@ class Board
 
     }
 
+    public boolean setPiece(Piece aPiece)
+    {
+        if (aPiece.getRow() > rows || aPiece.getColumn() > columns)
+        {
+            throw new IllegalArgumentException("Rows and columns for piece are out of range");
+        }
+
+        board[aPiece.getRow()][aPiece.getColumn()] = aPiece;
+        return true;
+    }
+
     public Piece[][] getBoard()
     {
         return board;
@@ -96,7 +129,7 @@ class Board
 
     public int getRows()
     {
-         return rows;
+        return rows;
     }
 
     public void setRows(int rows)
@@ -117,12 +150,32 @@ class Board
 
 class Piece
 {
+    private int row, column;
+
     public void assignAttack()
     {
 
     }
 
+    public int getRow()
+    {
+        return row;
+    }
 
+    public void setRow(int row)
+    {
+        this.row = row;
+    }
+
+    public int getColumn()
+    {
+        return column;
+    }
+
+    public void setColumn(int column)
+    {
+        this.column = column;
+    }
 }
 
 class Covered extends Piece
