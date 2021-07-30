@@ -42,7 +42,10 @@ class Queen extends Piece
     {
 
         aBoard = new Board(8, 8);
+        this.row = aRow;
+        this.column = aColumn;
 
+        aBoard.getBoard()[aRow][aColumn] = new Queen()
 
     }
 
@@ -50,8 +53,7 @@ class Queen extends Piece
     public void assignAttack()
     {
         super.assignAttack();
-
-
+        this.assignRowAttack();
     }
 
     private void assignRowAttack()
@@ -94,7 +96,7 @@ class Board
 
     public int getRows()
     {
-        return rows;
+         return rows;
     }
 
     public void setRows(int rows)
@@ -126,4 +128,14 @@ class Piece
 class Covered extends Piece
 {
 
+}
+
+class Testers
+{
+    public static void main(String[] asdasdasd)
+    {
+        Queen aQueen = new Queen(4, 4);
+
+        aQueen.assignAttack();
+    }
 }
