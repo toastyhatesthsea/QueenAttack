@@ -22,8 +22,11 @@ public class QueenAttackCalculator
         this.firstQueen = aFirstQueen;
         this.secondQueen = aSecondQueen;
 
-        theBoard.getBoard()[firstQueen.getRow()][firstQueen.getColumn()] = firstQueen;
-        theBoard.getBoard()[secondQueen.getRow()][secondQueen.getColumn()] = secondQueen;
+        //theBoard.getBoard()[firstQueen.getRow()][firstQueen.getColumn()] = firstQueen;
+        //theBoard.getBoard()[secondQueen.getRow()][secondQueen.getColumn()] = secondQueen;
+
+        theBoard.setPiece(firstQueen);
+        theBoard.setPiece(secondQueen);
     }
 
     public boolean canQueensAttackOneAnother()
@@ -33,18 +36,7 @@ public class QueenAttackCalculator
         return answer;
     }
 
-    private void assignRowAttack()
-    {
-        for (int i = 0; i < theBoard.getRows(); i++)
-        {
-            if (theBoard.getBoard()[firstQueen.getRow()][i] == null || i != column)
-            {
-                theBoard.getBoard()[row][i] = new Covered();
-            }
-        }
 
-        //TODO Assign columns for attack and test row and columns for attacks
-    }
 
 
 }
@@ -84,10 +76,26 @@ class Queen extends Piece
     }
 
     @Override
-    public void assignAttack()
+    public void assignAttack(Board aBoard)
     {
-        super.assignAttack();
+        
     }
+
+    private void assignRowAttack()
+    {
+        /*
+        for (int i = 0; i < theBoard.getRows(); i++)
+        {
+            if (theBoard.getBoard()[firstQueen.getRow()][i] == null || i != column)
+            {
+                theBoard.getBoard()[row][i] = new Covered();
+            }
+        }*/
+
+        //TODO Assign columns for attack and test row and columns for attacks
+    }
+
+
 
 
 }
@@ -152,7 +160,7 @@ class Piece
 {
     private int row, column;
 
-    public void assignAttack()
+    public void assignAttack(Board aBoard)
     {
 
     }
@@ -188,7 +196,10 @@ class Testers
     public static void main(String[] asdasdasd)
     {
         Queen aQueen = new Queen(4, 4);
+        Queen secondQueen = new Queen(3, 3);
 
-        aQueen.assignAttack();
+        QueenAttackCalculator attack = new QueenAttackCalculator(aQueen, secondQueen);
+
+        //aQueen.assignAttack();
     }
 }
