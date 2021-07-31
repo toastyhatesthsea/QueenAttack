@@ -36,11 +36,15 @@ public class QueenAttackCalculator
         return answer;
     }
 
+    public boolean assignAttackforPieces()
+    {
+        firstQueen.assignAttack(theBoard);
+        secondQueen.assignAttack(theBoard);
 
-
+        return true;
+    }
 
 }
-
 
 class Queen extends Piece
 {
@@ -78,25 +82,54 @@ class Queen extends Piece
     @Override
     public void assignAttack(Board aBoard)
     {
-        
+        assignRowAttack(aBoard);
+        assignColumnAttack(aBoard);
     }
 
-    private void assignRowAttack()
+    private void assignRowAttack(Board theBoard)
     {
-        /*
+
         for (int i = 0; i < theBoard.getRows(); i++)
         {
-            if (theBoard.getBoard()[firstQueen.getRow()][i] == null || i != column)
+            if (theBoard.getBoard()[row][i] == null || i != column)
             {
                 theBoard.getBoard()[row][i] = new Covered();
             }
-        }*/
+        }
 
         //TODO Assign columns for attack and test row and columns for attacks
     }
 
+    private void assignColumnAttack(Board theBoard)
+    {
 
+        for (int i = 0; i < theBoard.getRows(); i++)
+        {
+            if (theBoard.getBoard()[i][column] == null || i != column)
+            {
+                theBoard.getBoard()[i][column] = new Covered();
+            }
+        }
+    }
 
+    private void assignDiagnols(Board theBoard)
+    {
+
+    }
+
+    private void upperRightDiagnols(Board theBoard)
+    {
+        int horizontalVector = 1;
+        int verticalVector = -1;
+
+        //int i;
+        for (int i = row, j = column;i < theBoard.getRows() || j >= 0 ; i =+ verticalVector, j =+ horizontalVector)
+        {
+            if(theBoard.getBoard()[i][j])
+        }
+    }
+
+    //TODO Switch attacking methods to each piece class, otherwise harder to check if pieces can attack each other
 
 }
 
@@ -199,6 +232,8 @@ class Testers
         Queen secondQueen = new Queen(3, 3);
 
         QueenAttackCalculator attack = new QueenAttackCalculator(aQueen, secondQueen);
+
+        attack.assignAttackforPieces();
 
         //aQueen.assignAttack();
     }
