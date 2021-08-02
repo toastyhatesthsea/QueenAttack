@@ -25,8 +25,8 @@ public class QueenAttackCalculator
         //theBoard.getBoard()[firstQueen.getRow()][firstQueen.getColumn()] = firstQueen;
         //theBoard.getBoard()[secondQueen.getRow()][secondQueen.getColumn()] = secondQueen;
 
-        theBoard.setPiece(firstQueen);
-        theBoard.setPiece(secondQueen);
+        theBoard.setPiece(firstQueen, firstQueen.getRow(), firstQueen.getColumn());
+        theBoard.setPiece(secondQueen, secondQueen.getRow(), secondQueen.getColumn());
     }
 
     public boolean canQueensAttackOneAnother()
@@ -112,9 +112,15 @@ class Queen extends Piece
         }
     }
 
-    private void assignDiagnols(Board theBoard)
+    private void assignDiagnols(Board theBoard, int horizontalVector, int verticalVector)
     {
-
+        for (int i = row, j = column;i < theBoard.getRows() || j >= 0 ; i =+ verticalVector, j =+ horizontalVector)
+        {
+            if (theBoard.getBoard()[i][j].getClass() != Queen.class)
+            {
+                theBoard.setPiece(new Covered(), i, j);
+            }
+        }
     }
 
     private void upperRightDiagnols(Board theBoard)
@@ -122,11 +128,7 @@ class Queen extends Piece
         int horizontalVector = 1;
         int verticalVector = -1;
 
-        //int i;
-        for (int i = row, j = column;i < theBoard.getRows() || j >= 0 ; i =+ verticalVector, j =+ horizontalVector)
-        {
-            if(theBoard.getBoard()[i][j])
-        }
+        assignDiagnols(theBoard, horizontalVector, verticalVector);
     }
 
     //TODO Switch attacking methods to each piece class, otherwise harder to check if pieces can attack each other
@@ -147,14 +149,14 @@ class Board
 
     }
 
-    public boolean setPiece(Piece aPiece)
+    public boolean setPiece(Piece aPiece, int aRow, int aColumn)
     {
-        if (aPiece.getRow() > rows || aPiece.getColumn() > columns)
+        if (aPiece.getRow() > aRow || aPiece.getColumn() > aColumn || aColumn < 0 || aRow < 0)
         {
             throw new IllegalArgumentException("Rows and columns for piece are out of range");
         }
 
-        board[aPiece.getRow()][aPiece.getColumn()] = aPiece;
+        board[aRow][aColumn] = aPiece;
         return true;
     }
 
