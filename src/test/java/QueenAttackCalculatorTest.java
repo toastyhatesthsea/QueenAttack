@@ -116,7 +116,7 @@ public class QueenAttackCalculatorTest {
         assertTrue(calculator.canQueensAttackOneAnother());
     }
 
-    @Ignore("Remove to run test")
+    //@Ignore("Remove to run test")
     @Test
     public void testQueensCanAttackOnFourthDiagonal() {
         QueenAttackCalculator calculator

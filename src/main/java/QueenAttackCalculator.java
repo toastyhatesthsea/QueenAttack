@@ -38,15 +38,30 @@ public class QueenAttackCalculator
         assignAttackforDiagnols();
         assignAttackforPieces();
 
-        for (int i = 0; i < queenOneBoard.getBoard().length; i++)
-        {
-            
-        }
-
         boolean answer = false;
 
+
+        for (int i = 0; i < queenOneBoard.getBoard().length && !answer; i++)
+        {
+            Piece[] queenOneRow = queenOneBoard.getBoard()[i];
+            //Piece[] queenTwoRow = queenTwoBoard.getBoard()[i];
+
+            for (Piece aPiece : queenOneRow)
+            {
+                if (aPiece != null && aPiece.getClass() == Covered.class)
+                {
+                    if (aPiece.getRow() == secondQueen.getRow() && aPiece.getColumn() == secondQueen.getColumn())
+                    {
+                        answer = true;
+                        break;
+                    }
+                }
+            }
+        }
+        
         return answer;
     }
+
 
     public boolean assignAttackforPieces()
     {
@@ -94,6 +109,7 @@ class Queen extends Piece
 
     public Queen(int aRow, int aColumn)
     {
+        super(aRow, aColumn);
         //this.theBoard = new Board(8, 8);
         this.row = aRow;
         this.column = aColumn;
@@ -114,7 +130,7 @@ class Queen extends Piece
         {
             if (theBoard.getBoard()[row][i] == null || i != column)
             {
-                theBoard.getBoard()[row][i] = new Covered();
+                theBoard.setPiece(new Covered(row, i), row, i);
             }
         }
 
@@ -128,7 +144,7 @@ class Queen extends Piece
         {
             if (theBoard.getBoard()[i][column] == null || i != column)
             {
-                theBoard.getBoard()[i][column] = new Covered();
+                theBoard.setPiece(new Covered(i, column), i, column);
             }
         }
     }
@@ -147,7 +163,7 @@ class Queen extends Piece
         {
             if (theBoard.getBoard()[i][j] == null || theBoard.getBoard()[i][j].getClass() != Queen.class)
             {
-                theBoard.setPiece(new Covered(), i, j);
+                theBoard.setPiece(new Covered(i, j), i, j);
             }
         }
     }
@@ -253,6 +269,12 @@ class Piece
 
     }
 
+    public Piece(int aRow, int aColumn)
+    {
+        this.row = aRow;
+        this.column = aColumn;
+    }
+
     public int getRow()
     {
         return row;
@@ -276,7 +298,10 @@ class Piece
 
 class Covered extends Piece
 {
-
+    public Covered(int aRow, int aColmumn)
+    {
+        super(aRow, aColmumn);
+    }
 }
 
 class Testers
