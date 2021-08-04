@@ -35,6 +35,14 @@ public class QueenAttackCalculator
 
     public boolean canQueensAttackOneAnother()
     {
+        assignAttackforDiagnols();
+        assignAttackforPieces();
+
+        for (int i = 0; i < queenOneBoard.getBoard().length; i++)
+        {
+            
+        }
+
         boolean answer = false;
 
         return answer;
@@ -50,10 +58,8 @@ public class QueenAttackCalculator
 
     public boolean assignAttackforDiagnols()
     {
-        firstQueen.upperRightDiagnols(queenOneBoard);
-        firstQueen.upperLeftDiagnols(queenOneBoard);
-        secondQueen.upperLeftDiagnols(queenTwoBoard);
-        secondQueen.upperRightDiagnols(queenTwoBoard);
+        firstQueen.assignDiagnols(queenOneBoard);
+        secondQueen.assignDiagnols(queenTwoBoard);
 
         return true;
     }
@@ -130,6 +136,9 @@ class Queen extends Piece
     public void assignDiagnols(Board theBoard)
     {
         upperRightDiagnols(theBoard);
+        upperLeftDiagnols(theBoard);
+        bottomLeftDiagnols(theBoard);
+        bottomRightDiagnols(theBoard);
     }
 
     private void assignDiagnolsHelper(Board theBoard, int horizontalVector, int verticalVector)
@@ -159,7 +168,22 @@ class Queen extends Piece
         assignDiagnolsHelper(theBoard, horizontalVector, verticalVector);
     }
 
-    
+    public void bottomLeftDiagnols(Board theBoard)
+    {
+        int horizontalVector = -1;
+        int verticalVector = 1;
+
+        assignDiagnolsHelper(theBoard, horizontalVector, verticalVector);
+    }
+
+    public void bottomRightDiagnols(Board theBoard)
+    {
+        int horizontalVector = 1;
+        int verticalVector = 1;
+
+        assignDiagnolsHelper(theBoard, horizontalVector, verticalVector);
+    }
+
     //TODO Switch attacking methods to each piece class, otherwise harder to check if pieces can attack each other
 
 }
