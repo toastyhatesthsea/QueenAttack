@@ -19,6 +19,14 @@ public class QueenAttackCalculator
 
     public QueenAttackCalculator(Queen aFirstQueen, Queen aSecondQueen)
     {
+        if (aFirstQueen == null || aSecondQueen == null)
+        {
+            throw new IllegalArgumentException("You must supply valid positions for both Queens.");
+        } else if (aFirstQueen.getRow() == aSecondQueen.getRow() && aFirstQueen.getColumn() == aSecondQueen.getColumn())
+        {
+            throw new IllegalArgumentException("Queens cannot occupy the same position.");
+        }
+
         //theBoard = new Board(8, 8);
         this.firstQueen = aFirstQueen;
         this.secondQueen = aSecondQueen;
@@ -58,7 +66,7 @@ public class QueenAttackCalculator
                 }
             }
         }
-        
+
         return answer;
     }
 
@@ -110,6 +118,22 @@ class Queen extends Piece
     public Queen(int aRow, int aColumn)
     {
         super(aRow, aColumn);
+        if (aRow < 0)
+        {
+
+            throw new IllegalArgumentException("Queen position must have positive row.");
+        } else if (aRow > 7)
+        {
+            throw new IllegalArgumentException("Queen position must have row <= 7.");
+        } else if (aColumn < 0)
+        {
+            throw new IllegalArgumentException("Queen position must have positive column.");
+        } else if (aColumn > 7)
+        {
+            throw new IllegalArgumentException("Queen position must have column <= 7.");
+        }
+
+
         //this.theBoard = new Board(8, 8);
         this.row = aRow;
         this.column = aColumn;
@@ -271,6 +295,7 @@ class Piece
 
     public Piece(int aRow, int aColumn)
     {
+
         this.row = aRow;
         this.column = aColumn;
     }
